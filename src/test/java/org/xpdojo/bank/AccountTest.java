@@ -33,4 +33,13 @@ public class AccountTest {
         assertThat(account.getBalance()).isEqualTo(90);
         assertThat(withdrawnMoney).isEqualTo(10);
     }
+
+    @Test
+    public void transferMoneyBetweenAccounts() {
+        Account account1 = new Account(100);
+        Account account2 = new Account(50);
+        account1.transferMoneyTo(account2, 30);
+        assertThat(account1.getBalance()).isEqualTo(70);
+        assertThat(account2.getBalance()).isEqualTo(80);
+    }
 }

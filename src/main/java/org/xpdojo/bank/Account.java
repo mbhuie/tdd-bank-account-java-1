@@ -19,4 +19,9 @@ public class Account {
         this.balance -= amount;
         return amount;
     }
+
+    public void transferMoneyTo(Account account2, int amount) {
+        int money = this.withdraw(amount);
+        account2.deposit(money);
+    }
 }
