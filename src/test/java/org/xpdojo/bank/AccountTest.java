@@ -3,7 +3,13 @@ package org.xpdojo.bank;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AccountTest {
 
@@ -41,5 +47,19 @@ public class AccountTest {
         account1.transferMoneyTo(account2, 30);
         assertThat(account1.getBalance()).isEqualTo(70);
         assertThat(account2.getBalance()).isEqualTo(80);
+    }
+
+    @Test
+    public void printAcocuntBalanceSlip() throws IOException {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+
+        Account account = new Account(100);
+        account.printBalanceSlip();
+
+        outputStream.flush();
+        String message = new String(outputStream.toByteArray());
+        assertTrue(message.contains(LocalDate.now() + " " + "100"));
     }
 }
