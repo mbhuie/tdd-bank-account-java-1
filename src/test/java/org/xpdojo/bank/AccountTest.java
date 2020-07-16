@@ -12,4 +12,10 @@ public class AccountTest {
         Account account = new Account();
         assertThat(account.getBalance()).isEqualTo(0);
     }
+
+    @Test
+    public void newAccountHasBalanceWhenSpecifiedOnOpening() {
+        Account account = new Account(100);
+        assertThat(account.getBalance()).isEqualTo(100);
+    }
 }
