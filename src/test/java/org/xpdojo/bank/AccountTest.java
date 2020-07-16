@@ -52,6 +52,15 @@ public class AccountTest {
     }
 
     @Test
+    public void shouldNotBeAbleToWithdrawNeagiveAmount() {
+        Account account = new Account(100);
+        Exception exception = assertThrows(NumberFormatException.class, () -> account.withdraw(-10));
+        String expectedMessage  = "Amount can not be negative when withdrawing";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     public void transferMoneyBetweenAccounts() throws NumberFormatException {
         Account account1 = new Account(100);
         Account account2 = new Account(50);

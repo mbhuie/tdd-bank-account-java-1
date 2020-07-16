@@ -22,6 +22,9 @@ public class Account {
     }
 
     public int withdraw(int amount) {
+        if(amount < 0) {
+            throw new NumberFormatException("Amount can not be negative when withdrawing");
+        }
         this.balance -= amount;
         return amount;
     }
