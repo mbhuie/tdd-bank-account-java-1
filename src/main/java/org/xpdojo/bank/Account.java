@@ -25,6 +25,9 @@ public class Account {
         if(amount < 0) {
             throw new NumberFormatException("Amount can not be negative when withdrawing");
         }
+        if(amount > balance) {
+            throw new NotEnoughBalance("Not enough balance in the account.");
+        }
         this.balance -= amount;
         return amount;
     }

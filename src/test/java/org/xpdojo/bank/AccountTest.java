@@ -44,6 +44,15 @@ public class AccountTest {
     }
 
     @Test
+    public void shouldNotBeAbleToWithdrawIfBalanceIsLow(){
+        Account account = new Account(100);
+        Exception exception = assertThrows(NotEnoughBalance.class, () -> account.withdraw(110));
+        String expectedMessage  = "Not enough balance in the account.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     public void withdrawMoneyFromAccountReducesBalance() {
         Account account = new Account(100);
         int withdrawnMoney = account.withdraw(10);
@@ -70,7 +79,17 @@ public class AccountTest {
     }
 
     @Test
-    public void printAcocuntBalanceSlip() throws IOException {
+    public void shouldNotBeAbleToTransferIfAccountDoesNotHaveEnoughBalance() {
+        Account account1 = new Account(10);
+        Account account2 = new Account(50);
+        Exception exception = assertThrows(NotEnoughBalance.class, () -> account1.transferMoneyTo(account2, 30));
+        String expectedMessage  = "Not enough balance in the account.";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    public void printAccountBalanceSlip() throws IOException {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
