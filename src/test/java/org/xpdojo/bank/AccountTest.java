@@ -1,5 +1,6 @@
 package org.xpdojo.bank;
 
+import org.assertj.core.condition.Negative;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,7 @@ import java.io.PrintStream;
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AccountTest {
@@ -26,10 +28,19 @@ public class AccountTest {
     }
 
     @Test
-    public void depositingMoneyIntoAccountIncreasesBalance() {
+    public void depositingMoneyIntoAccountIncreasesBalance() throws NumberFormatException {
         Account account = new Account(100);
         account.deposit(10);
         assertThat(account.getBalance()).isEqualTo(110);
+    }
+
+    @Test
+    public void shouldNotBeAbleToDepositNegativeAmount(){
+        Account account = new Account(100);
+        Exception exception = assertThrows(NumberFormatException.class, () -> account.deposit(-10));
+        String expectedMessage  = "Amount can not be negative when depositing";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
@@ -41,7 +52,7 @@ public class AccountTest {
     }
 
     @Test
-    public void transferMoneyBetweenAccounts() {
+    public void transferMoneyBetweenAccounts() throws NumberFormatException {
         Account account1 = new Account(100);
         Account account2 = new Account(50);
         account1.transferMoneyTo(account2, 30);
