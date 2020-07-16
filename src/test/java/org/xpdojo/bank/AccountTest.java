@@ -25,4 +25,12 @@ public class AccountTest {
         account.deposit(10);
         assertThat(account.getBalance()).isEqualTo(110);
     }
+
+    @Test
+    public void withdrawMoneyFromAccountReducesBalance() {
+        Account account = new Account(100);
+        int withdrawnMoney = account.withdraw(10);
+        assertThat(account.getBalance()).isEqualTo(90);
+        assertThat(withdrawnMoney).isEqualTo(10);
+    }
 }
